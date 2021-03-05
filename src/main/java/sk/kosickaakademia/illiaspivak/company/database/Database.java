@@ -77,6 +77,21 @@ public class Database {
         return false;
     }
 
+    private List<User> executeSelect(PreparedStatement ps) throws SQLException {
+        ResultSet rs =  ps.executeQuery();
+        List<User> list = new ArrayList<>();
+        while(rs.next()){
+            String fname = rs.getString("fname");
+            String lname = rs.getString("lname");
+            int age = rs.getInt("age");
+            int id = rs.getInt("id");
+            int gender = rs.getInt("gender");
+            User user = new User(id,fname,lname,age,gender);
+            list.add(user);
+        }
+        return list;
+    }
+
     public List<User> getFemales(){
         return null;
     }

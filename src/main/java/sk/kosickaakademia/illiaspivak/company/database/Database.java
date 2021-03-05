@@ -107,7 +107,7 @@ public class Database {
             }
             PreparedStatement ps = connection.prepareStatement(query);
             list = executeSelect(ps);
-            connection.close();
+            closeConnection(connection);
             log.print("Selected women from the database");
             return list;
         }catch(Exception ex){
@@ -131,7 +131,7 @@ public class Database {
             }
             PreparedStatement ps = connection.prepareStatement(query);
             list = executeSelect(ps);
-            connection.close();
+            closeConnection(connection);
             log.print("Selected men from the database");
             return list;
         }catch(Exception ex){
@@ -160,7 +160,7 @@ public class Database {
                 ps.setInt(1,from);
                 ps.setInt(2, to);
                 list = executeSelect(ps);
-                connection.close();
+                closeConnection(connection);
                 log.print("Users of this age range are selected from the database");
                 return list;
             }catch(Exception ex){
@@ -198,8 +198,30 @@ public class Database {
         return null;
     }
 
-    public User getUserById(int id){
-
+    public User getUserById(int number){
+        String query = "SELECT * FROM user WHERE id = ?";
+        try {
+            Connection connection = getConnection();
+            if(connection == null){
+                log.error("No connection");
+                return null;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1,number);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                String fname = rs.getString("fname");
+                String lname = rs.getString("lname");
+                int age = rs.getInt("age");
+                int id = rs.getInt("id");
+                int gender = rs.getInt("gender");
+                User user = new User(id,fname,lname,age,gender);
+                connection.close();
+                return user;
+            }
+        }catch(Exception ex){
+            log.error(ex.toString());
+        }
         return null;
     }
 

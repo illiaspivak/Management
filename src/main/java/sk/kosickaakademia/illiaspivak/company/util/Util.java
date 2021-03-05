@@ -13,7 +13,23 @@ import java.util.List;
 public class Util {
 
     public String getJson (List<User> list){
+       /* if (list.isEmpty()) return "{}";
+        JSONObject object = new JSONObject();
+        object.put("datetime",getCurrentTime());
+        object.put("size",list.size());
+        JSONArray jsonArray = new JSONArray();
+        JSONObject userJson = new JSONObject();
+        userJson.put("id",user.getId());
+        userJson.put("fname",user.getFname());
+        userJson.put("lname",user.getLname());
+        userJson.put("age",user.getAge());
+        userJson.put("gender",user.getGender().toString());
+        jsonArray.add(userJson);
+        object.put("users",jsonArray);
 
+        return object.toJSONString();
+
+        */
         return null;
     }
 
@@ -42,6 +58,7 @@ public class Util {
     }
 
     public String normalizeName (String name){
-        return name;
+        return name.substring(0,1).toUpperCase()
+                + name.substring(1).toLowerCase();
     }
 }

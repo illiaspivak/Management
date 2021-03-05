@@ -13,6 +13,9 @@ public class App {
         Database database = new Database();
         User user = database.getUserById(3);
         System.out.println(user);
+        database.changeAge(3,18);
+        User meky = database.getUserById(3);
+        System.out.println(meky);
 
     }
 }

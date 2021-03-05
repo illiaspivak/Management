@@ -225,7 +225,37 @@ public class Database {
         return null;
     }
 
+    /**
+     * Changing the user's age
+     * @param id
+     * @param newAge
+     * @return
+     */
     public boolean changeAge(int id, int newAge){
+        if (id<0) {
+            log.error("The id cannot be negative");
+            return false;
+        }
+        if (newAge<1 || newAge>99){
+            log.error("The age must be between 1 and 99");
+            return false;
+        }
+        String query = "UPDATE user SET age = ? WHERE id = ?";
+        try {
+            Connection connection = getConnection();
+            if(connection == null){
+                log.error("No connection");
+                return false;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1,newAge);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            log.print("Age changed");
+            return true;
+        }catch(Exception ex){
+            log.error(ex.toString());
+        }
         return false;
     }
 

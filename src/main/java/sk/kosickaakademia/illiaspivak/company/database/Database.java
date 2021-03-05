@@ -92,7 +92,27 @@ public class Database {
         return list;
     }
 
+    /**
+     * Select women from the database
+     * @return
+     */
     public List<User> getFemales(){
+        List<User> list = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE gender = 1";
+        try {
+            Connection connection = getConnection();
+            if(connection == null){
+                log.error("No connection");
+                return null;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            list = executeSelect(ps);
+            connection.close();
+            log.print("Selected women from the database");
+            return list;
+        }catch(Exception ex){
+            log.error(ex.toString());
+        }
         return null;
     }
 

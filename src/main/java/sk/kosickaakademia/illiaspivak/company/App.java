@@ -11,7 +11,7 @@ public class App {
     public static void main(String[] args) {
         Util util = new Util();
         Database database = new Database();
-        List<User> list = database.getAllUsers();
+        List<User> list = database.getFemales();
         System.out.println(list);
 
     }

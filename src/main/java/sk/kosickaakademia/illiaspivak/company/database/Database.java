@@ -3,6 +3,7 @@ package sk.kosickaakademia.illiaspivak.company.database;
 import sk.kosickaakademia.illiaspivak.company.entity.User;
 import sk.kosickaakademia.illiaspivak.company.helpclasses.Connect;
 import sk.kosickaakademia.illiaspivak.company.log.Log;
+import sk.kosickaakademia.illiaspivak.company.util.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,9 +12,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Database {
-
-
+    Util util = new Util();
     Log log = new Log();
+
+
     /**
      * Connecting to the database
      * @return
@@ -32,6 +34,10 @@ public class Database {
         return null;
     }
 
+    /**
+     * Close connection to the database
+     * @param connection
+     */
     public void closeConnection(Connection connection)  {
         if(connection!=null) {
             try {
@@ -43,7 +49,34 @@ public class Database {
         }
     }
 
+    /**
+     * Adding a new user to the database
+     * @param user
+     * @return
+     */
     public boolean insertNewUser(User user){
+        if(user==null)
+            return false;
+        String fname = util.normalizeName(user.getFname());
+//        String lname = util.normalizeName(user.getLname());
+        String lname = user.getLname();
+        Connection connection = getConnection();
+        String query = "INSERT INTO user (fname, lname, age, gender) VALUES ( ?, ?, ?, ?)";
+        if(connection!=null){
+            try{
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1,fname);
+                ps.setString(2,lname);
+                ps.setInt(3,user.getAge());
+                ps.setInt(4,user.getGender().getValue());
+                int result = ps.executeUpdate();
+                closeConnection(connection);
+                log.print("New user has been added to the database");
+                return result==1;
+            }catch(SQLException ex){
+                log.error(ex.toString());
+            }
+        }
         return false;
     }
 

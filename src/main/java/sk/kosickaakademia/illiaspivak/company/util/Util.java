@@ -58,7 +58,8 @@ public class Util {
     }
 
     public String normalizeName (String name){
-        return name.substring(0,1).toUpperCase()
-                + name.substring(1).toLowerCase();
+        if(name==null || name.equals(""))
+            return "";
+        return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
     }
 }

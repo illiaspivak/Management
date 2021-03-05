@@ -11,11 +11,9 @@ public class App {
     public static void main(String[] args) {
         Util util = new Util();
         Database database = new Database();
-        User user = database.getUserById(3);
-        System.out.println(user);
-        database.changeAge(3,18);
-        User meky = database.getUserById(3);
-        System.out.println(meky);
+        List<User> list = database.getUser("ma");
+        System.out.println(list);
+
 
     }
 }

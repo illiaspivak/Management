@@ -261,6 +261,18 @@ public class Database {
     }
 
     public List<User> getUser(String pattern){
-        return null;
+        List<User> users = getAllUsers();
+        List<User> list = new ArrayList<>();
+        for(int i = 0; i< users.size(); i++) {
+            if(users.get(i).getFname().contains(pattern) || users.get(i).getLname().contains(pattern)){
+                list.add(users.get(i));
+            }
+        }
+        if (list == null) {
+            log.error("No match");
+            return null;
+        }
+        log.print("Matches found");
+        return list;
     }
 }

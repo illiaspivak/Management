@@ -1,13 +1,14 @@
 package sk.kosickaakademia.illiaspivak.company.database;
 
+import sk.kosickaakademia.illiaspivak.company.entity.User;
 import sk.kosickaakademia.illiaspivak.company.helpclasses.Connect;
 import sk.kosickaakademia.illiaspivak.company.log.Log;
 
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.List;
 
 public class Database {
 
@@ -40,5 +41,43 @@ public class Database {
                 log.error(e.toString());
             }
         }
+    }
+
+    public boolean insertNewUser(User user){
+        return false;
+    }
+
+    public List<User> getFemales(){
+        return null;
+    }
+
+    public List<User> getMales(){
+        return  null;
+    }
+
+    public List<User> getUsersByAge(int from, int to){
+        return null;
+    }
+
+    private List<User> executeSelect(PreparedStatement ps) throws SQLException {
+        return null;
+    }
+
+    public List<User> getAllUsers(){
+
+        return null;
+    }
+
+    public User getUserById(int id){
+
+        return null;
+    }
+
+    public boolean changeAge(int id, int newAge){
+        return false;
+    }
+
+    public List<User> getUser(String pattern){
+        return null;
     }
 }

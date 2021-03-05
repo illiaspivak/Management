@@ -116,8 +116,28 @@ public class Database {
         return null;
     }
 
+    /**
+     * Select men from the database
+     * @return
+     */
     public List<User> getMales(){
-        return  null;
+        List<User> list = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE gender = 0";
+        try {
+            Connection connection = getConnection();
+            if(connection == null){
+                log.error("No connection");
+                return null;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            list = executeSelect(ps);
+            connection.close();
+            log.print("Selected men from the database");
+            return list;
+        }catch(Exception ex){
+            log.error(ex.toString());
+        }
+        return null;
     }
 
     public List<User> getUsersByAge(int from, int to){

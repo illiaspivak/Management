@@ -140,7 +140,33 @@ public class Database {
         return null;
     }
 
+    /**
+     * Select users from the age range
+     * @param from
+     * @param to
+     * @return
+     */
     public List<User> getUsersByAge(int from, int to){
+        if(from<to){
+            List<User> list = new ArrayList<>();
+            String query = "SELECT * FROM user WHERE age >= ? AND age <= ?";
+            try {
+                Connection connection = getConnection();
+                if(connection == null){
+                    log.error("No connection");
+                    return null;
+                }
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1,from);
+                ps.setInt(2, to);
+                list = executeSelect(ps);
+                connection.close();
+                log.print("Users of this age range are selected from the database");
+                return list;
+            }catch(Exception ex){
+                log.error(ex.toString());
+            }
+        }
         return null;
     }
 

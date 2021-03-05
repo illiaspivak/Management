@@ -190,7 +190,7 @@ public class Database {
                 User user=new User(id,fname,lname,age,gender);
                 list.add(user);
             }
-            connection.close();
+            closeConnection(connection);
             return list;
         }catch(Exception ex){
             log.error(ex.toString());
@@ -216,7 +216,7 @@ public class Database {
                 int id = rs.getInt("id");
                 int gender = rs.getInt("gender");
                 User user = new User(id,fname,lname,age,gender);
-                connection.close();
+                closeConnection(connection);
                 return user;
             }
         }catch(Exception ex){
@@ -252,6 +252,7 @@ public class Database {
             ps.setInt(2, id);
             ps.executeUpdate();
             log.print("Age changed");
+            closeConnection(connection);
             return true;
         }catch(Exception ex){
             log.error(ex.toString());

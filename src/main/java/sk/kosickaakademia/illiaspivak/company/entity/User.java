@@ -5,33 +5,33 @@ import sk.kosickaakademia.illiaspivak.company.helpclasses.Gender;
 public class User {
 
     private int id;
-    private String firstName;
-    private String lastName;
+    private String fname;
+    private String lname;
     private int age;
     private Gender gender;
 
-    public User(int id, String firstName, String lastName, int age, Gender gender) {
-        this(firstName, lastName, age, gender);
+    public User(int id, String fname, String lname, int age, int gender) {
+        this(fname, lname, age, gender);
         this.id = id;
     }
 
-    public User(String firstName, String lastName, int age, Gender gender) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String fname, String lname, int age, int gender) {
+        this.fname = fname;
+        this.lname = lname;
         this.age = age;
-        this.gender = gender;
+        this.gender = gender==0 ? Gender.MALE : gender==1 ? Gender.FEMALE : Gender.OTHER;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFname() {
+        return fname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLname() {
+        return lname;
     }
 
     public int getAge() {
@@ -41,4 +41,6 @@ public class User {
     public Gender getGender() {
         return gender;
     }
+
+
 }

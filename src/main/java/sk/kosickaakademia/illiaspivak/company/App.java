@@ -5,13 +5,14 @@ import sk.kosickaakademia.illiaspivak.company.entity.User;
 import sk.kosickaakademia.illiaspivak.company.util.Util;
 
 import java.io.OutputStream;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
         Util util = new Util();
         Database database = new Database();
-        User frances = new User("Frances", "McDormand", 63, 1);
-        database.insertNewUser(frances);
+        List<User> list = database.getAllUsers();
+        System.out.println(list);
 
     }
 }

@@ -42,5 +42,10 @@ public class User {
         return gender;
     }
 
+    @Override
+    public String toString() {
+        return "[" + id + " " + fname + " " + lname + " " + age + " " + gender + ']';
+    }
+
 
 }

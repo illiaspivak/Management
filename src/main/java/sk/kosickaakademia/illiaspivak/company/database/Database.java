@@ -5,10 +5,8 @@ import sk.kosickaakademia.illiaspivak.company.helpclasses.Connect;
 import sk.kosickaakademia.illiaspivak.company.log.Log;
 import sk.kosickaakademia.illiaspivak.company.util.Util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
@@ -58,8 +56,7 @@ public class Database {
         if(user==null)
             return false;
         String fname = util.normalizeName(user.getFname());
-//        String lname = util.normalizeName(user.getLname());
-        String lname = user.getLname();
+        String lname = util.normalizeName(user.getLname());
         Connection connection = getConnection();
         String query = "INSERT INTO user (fname, lname, age, gender) VALUES ( ?, ?, ?, ?)";
         if(connection!=null){
@@ -92,12 +89,31 @@ public class Database {
         return null;
     }
 
-    private List<User> executeSelect(PreparedStatement ps) throws SQLException {
-        return null;
-    }
-
     public List<User> getAllUsers(){
-
+        List<User> list = new ArrayList<>();
+        String query = "SELECT * FROM user";
+        try {
+            Connection connection = getConnection();
+            if(connection ==null){
+                log.error("No connection");
+                return null;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                String fname = rs.getString("fname");
+                String lname = rs.getString("lname");
+                int age = rs.getInt("age");
+                int id = rs.getInt("id");
+                int gender = rs.getInt("gender");
+                User user=new User(id,fname,lname,age,gender);
+                list.add(user);
+            }
+            connection.close();
+            return list;
+        }catch(Exception ex){
+            log.error(ex.toString());
+        }
         return null;
     }
 

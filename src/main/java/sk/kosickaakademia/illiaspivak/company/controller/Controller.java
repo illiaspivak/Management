@@ -5,10 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sk.kosickaakademia.illiaspivak.company.database.Database;
 import sk.kosickaakademia.illiaspivak.company.entity.User;
 import sk.kosickaakademia.illiaspivak.company.helpclasses.Gender;
@@ -64,6 +61,16 @@ public class Controller {
     @GetMapping("/users")
     public ResponseEntity<String> getAllUsers(){
         List<User> list = new Database().getAllUsers();
+        String json = new Util().getJson(list);
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
+    }
+
+    @GetMapping("/users/age")
+    public ResponseEntity<String> getUsersByAge(@RequestParam(value="from") int from, @RequestParam(value = "to") int to){
+        if(from>to || from <1){
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body("");
+        }
+        List<User> list = new Database().getUsersByAge(from, to);
         String json = new Util().getJson(list);
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
     }

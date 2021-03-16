@@ -3,6 +3,7 @@ package sk.kosickaakademia.illiaspivak.company.controller;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,4 +75,16 @@ public class Controller {
         String json = new Util().getJson(list);
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
     }
+
+    @PutMapping
+    public ResponseEntity<String> changeAge(@PathVariable Integer id, @RequestBody String body){
+        try {
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(body);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

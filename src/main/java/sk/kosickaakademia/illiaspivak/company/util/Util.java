@@ -5,6 +5,7 @@ import sk.kosickaakademia.illiaspivak.company.entity.User;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
+import sk.kosickaakademia.illiaspivak.company.helpclasses.Gender;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,5 +62,36 @@ public class Util {
         if(name==null || name.equals(""))
             return "";
         return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+    }
+
+    public String getOverview(List<User> list){
+        int male = 0, female = 0, sumAge = 0;
+        int min = list.size()>0? list.get(0).getAge():0;
+        int max = list.size()>0? list.get(0).getAge():0;
+        for(User user : list){
+            if(user.getGender()== Gender.FEMALE){
+                female++;
+            }else if (user.getGender()== Gender.MALE){
+                male++;
+            }
+            sumAge += user.getAge();
+            if(min>user.getAge()){
+                min=user.getAge();
+            }
+            if(max<user.getAge()){
+                max=user.getAge();
+            }
+        }
+        double age = (double)sumAge/list.size();
+        JSONObject object = new JSONObject();
+        object.put("count",list.size());
+        object.put("male",male);
+        object.put("female",female);
+        object.put("age",age);
+        object.put("min",min);
+        object.put("max",max);
+        return object.toJSONString();
+
+
     }
 }

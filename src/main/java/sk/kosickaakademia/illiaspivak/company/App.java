@@ -12,9 +12,7 @@ import java.util.List;
 @SpringBootApplication
 public class App {
     public static void main(String[] args) {
-        //SpringApplication.run(App.class,args);
-        Util util = new Util();
-        List<User> list = new Database().getAllUsers();
-        System.out.println(util.getOverview(list));
+        SpringApplication.run(App.class,args);
+       
     }
 }

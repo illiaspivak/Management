@@ -1,6 +1,8 @@
 package sk.kosickaakademia.illiaspivak.company.util;
 
 import com.mysql.cj.xdevapi.JsonArray;
+import org.json.XML;
+import sk.kosickaakademia.illiaspivak.company.database.Database;
 import sk.kosickaakademia.illiaspivak.company.entity.User;
 
 import org.json.simple.JSONObject;
@@ -110,4 +112,9 @@ public class Util {
 
         return token.toString();
     }
+
+
+
+
+
 }

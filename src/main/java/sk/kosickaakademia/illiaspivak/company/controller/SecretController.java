@@ -81,4 +81,33 @@ public class SecretController {
         return ResponseEntity.status(401).body("Invalid token");
     }
 
+    @GetMapping(path = "/erasmus")
+    public ResponseEntity<String> menu(@RequestHeader("token") String token){
+        JSONObject student = new JSONObject();
+        student.put("first name", "Vlad");
+        student.put("last name", "Skobley");
+
+        if (isLoggedIn(token)){
+            student.put("country", "Greece");
+            student.put("stipend", "650$");
+
+            return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(student.toJSONString());
+        }else {
+            return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(student.toJSONString());
+        }
+    }
+
+    private boolean isLoggedIn(String token) {
+        if (token == null || token.isBlank())
+            return false;
+
+        for (Map.Entry<String, String> entry: map.entrySet()){
+            if (("Bearer "+entry.getValue()).equals(token)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

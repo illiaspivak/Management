@@ -64,4 +64,21 @@ public class SecretController {
         return ResponseEntity.status(400).body("Bad request.");
     }
 
+    @PostMapping(path = "/logout")
+    public ResponseEntity<String> logOut(@RequestHeader("token") String token){
+        if (token == null || token.isBlank())
+            return ResponseEntity.status(401).body("Invalid token");
+
+        for (Map.Entry<String, String> entry: map.entrySet()){
+            if (("Bearer "+entry.getValue()).equals(token)) {
+                if (map.remove(entry.getKey(), entry.getValue())) {
+                    return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body("You have been logged out");
+                }else {
+                    return ResponseEntity.status(500).contentType(MediaType.APPLICATION_JSON).body("Internal server error");
+                }
+            }
+        }
+        return ResponseEntity.status(401).body("Invalid token");
+    }
+
 }

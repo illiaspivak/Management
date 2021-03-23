@@ -10,6 +10,7 @@ import sk.kosickaakademia.illiaspivak.company.helpclasses.Gender;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class Util {
 
@@ -93,5 +94,20 @@ public class Util {
         return object.toJSONString();
 
 
+    }
+
+
+    public String generateToken(){
+        StringBuilder token = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 40; i++) {
+            switch (random.nextInt(3)){
+                case 0 -> token.append(random.nextInt(10)); // digit
+                case 1 -> token.append((char) (random.nextInt(26)+97)); // lowerCase number
+                case 2 -> token.append((char) (random.nextInt(26)+65)); // UpperCase number
+            }
+        }
+
+        return token.toString();
     }
 }

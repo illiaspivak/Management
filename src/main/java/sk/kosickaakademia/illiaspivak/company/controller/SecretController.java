@@ -1,7 +1,13 @@
 package sk.kosickaakademia.illiaspivak.company.controller;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sk.kosickaakademia.illiaspivak.company.log.Log;
+import sk.kosickaakademia.illiaspivak.company.util.Util;
 
 
 import java.util.HashMap;
@@ -23,6 +29,39 @@ public class SecretController {
             }
         }
         return "401";
+    }
+
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<String> login(@RequestBody String body){
+
+        try {
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(body);
+
+            String login = ((String) jsonObject.get("login"));
+            String password = ((String) jsonObject.get("password"));
+
+            if (login == null || login.isBlank() || password == null || password.isBlank()){
+                return ResponseEntity.status(400).body("Bad request.");
+            }
+            if (password.equals(PASSWORD)){
+                String token = new Util().generateToken();
+                map.put(login, token);
+
+                JSONObject obj = new JSONObject();
+                obj.put("info", "User logged in.");
+                obj.put("login", login);
+                obj.put("token", "Bearer "+token);
+
+                return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(obj.toJSONString());
+
+            }else {
+                return ResponseEntity.status(401).body("Incorrect password.");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(400).body("Bad request.");
     }
 
 }

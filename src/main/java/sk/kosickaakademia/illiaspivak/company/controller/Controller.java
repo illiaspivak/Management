@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import sk.kosickaakademia.illiaspivak.company.database.Database;
 import sk.kosickaakademia.illiaspivak.company.entity.User;
 import sk.kosickaakademia.illiaspivak.company.helpclasses.Gender;
+import sk.kosickaakademia.illiaspivak.company.helpclasses.XML;
 import sk.kosickaakademia.illiaspivak.company.log.Log;
 import sk.kosickaakademia.illiaspivak.company.util.Util;
 
@@ -64,6 +65,15 @@ public class Controller {
         List<User> list = new Database().getAllUsers();
         String json = new Util().getJson(list);
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
+    }
+
+    @GetMapping("/usersXML")
+    public ResponseEntity<String> getAllUsersXML(){
+        List<User> list = new Database().getAllUsers();
+        String json = new Util().getJson(list);
+        String xml = new XML().FromJsonToXML(json);
+        System.out.println(xml);
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_XML).body(xml);
     }
 
     @GetMapping("/users/age")

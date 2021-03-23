@@ -15,13 +15,13 @@ import java.util.List;
 @SpringBootApplication
 public class App {
     public static void main(String[] args) {
-        //SpringApplication.run(App.class,args);
+        SpringApplication.run(App.class,args);
 
-        Util util = new Util();
-        Database database = new Database();
-        XML xml = new XML();
+       // Util util = new Util();
+       // Database database = new Database();
+       // XML xml = new XML();
 
-        System.out.println(xml.FromJsonToXML(util.getJson(database.getAllUsers())));
+       // System.out.println(xml.FromJsonToXML(util.getJson(database.getAllUsers())));
        
     }
 }

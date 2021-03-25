@@ -9,4 +9,8 @@ public class Log {
         System.out.println("[OK] - "+str);
     }
 
+    public static void info(String str){
+        System.out.println("[INFO] - "+str);
+    }
+
 }

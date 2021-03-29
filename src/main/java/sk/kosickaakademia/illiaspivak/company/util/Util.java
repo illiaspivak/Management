@@ -9,12 +9,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import sk.kosickaakademia.illiaspivak.company.helpclasses.Gender;
 
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 public class Util {
+    private static final SecureRandom secureRandom = new SecureRandom();
+    private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
 
     public String getJson (List<User> list){
         if (list.isEmpty()) return "{}";
@@ -99,18 +103,10 @@ public class Util {
     }
 
 
-    public String generateToken(){
-        StringBuilder token = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 40; i++) {
-            switch (random.nextInt(3)){
-                case 0 -> token.append(random.nextInt(10)); // digit
-                case 1 -> token.append((char) (random.nextInt(26)+97)); // lowerCase number
-                case 2 -> token.append((char) (random.nextInt(26)+65)); // UpperCase number
-            }
-        }
-
-        return token.toString();
+    public static String generateToken(){
+        byte[] randomBytes = new byte[24];
+        secureRandom.nextBytes(randomBytes);
+        return base64Encoder.encodeToString(randomBytes);
     }
 
 

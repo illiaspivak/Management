@@ -41,10 +41,10 @@ public class Login {
             return token;
         }else{
             log.error("The password is incorrect");
-            log.info("Checking if the user is in the collection attemp");
+            log.info("Checking if the user is in the collection attempt");
             System.out.println(attempt.containsKey(username));
             if(attempt.containsKey(username)){
-                log.info("The user is in the collection attemp");
+                log.info("The user is in the collection attempt");
                 int count = attempt.get(username);
                 System.out.println(count);
                 if(count<2){
@@ -64,8 +64,8 @@ public class Login {
                     }
                 }
             }else{
-                log.info("User not in the collection attemp");
-                log.info("Adding the user to the collection attemp");
+                log.info("User not in the collection attempt");
+                log.info("Adding the user to the collection attempt");
                 attempt.put(username,0);
                 System.out.println(username);
                 System.out.println(attempt.get(username));

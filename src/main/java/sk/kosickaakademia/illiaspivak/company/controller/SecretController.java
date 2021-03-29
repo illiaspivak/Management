@@ -24,7 +24,7 @@ public class SecretController {
     @GetMapping("/secret")
     public String secret(@RequestHeader("token") String header){
         System.out.println(header);
-        String token = header.substring(7);
+        String token = header.substring(7); // without Bearer
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if(entry.getValue().equalsIgnoreCase(token)){
                 return "secret";
@@ -58,7 +58,6 @@ public class SecretController {
                 return ResponseEntity.status(401).body("You are blocked. Wait one minute");
             }
 
-
             if (token != null){
                 map.put(login, token);
                 JSONObject obj = new JSONObject();
@@ -69,8 +68,6 @@ public class SecretController {
             }else {
                 return ResponseEntity.status(401).body("Incorrect password.");
             }
-
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -95,7 +92,7 @@ public class SecretController {
     }
 
     @GetMapping(path = "/erasmus")
-    public ResponseEntity<String> menu(@RequestHeader("token") String token){
+    public ResponseEntity<String> erasmus(@RequestHeader("token") String token){
         JSONObject student = new JSONObject();
         student.put("first name", "Vlad");
         student.put("last name", "Skobley");
@@ -110,6 +107,11 @@ public class SecretController {
         }
     }
 
+    /**
+     * Checking whether you are logged in
+     * @param token
+     * @return true/false
+     */
     private boolean isLoggedIn(String token) {
         if (token == null || token.isBlank())
             return false;
@@ -119,7 +121,6 @@ public class SecretController {
                 return true;
             }
         }
-
         return false;
     }
 

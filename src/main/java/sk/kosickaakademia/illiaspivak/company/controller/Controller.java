@@ -14,6 +14,7 @@ import sk.kosickaakademia.illiaspivak.company.helpclasses.XML;
 import sk.kosickaakademia.illiaspivak.company.log.Log;
 import sk.kosickaakademia.illiaspivak.company.util.Util;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -86,14 +87,20 @@ public class Controller {
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
     }
 
-    @PutMapping
-    public ResponseEntity<String> changeAge(@PathVariable Integer id, @RequestBody String body){
-        try {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(body);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    @PutMapping(path = "/user/newage")
+    public ResponseEntity<String> changeAge(@PathParam("id") int id, @PathParam("newAge") int newAge){
+        if (id < 1 || newAge < 1 || newAge>99){
+            log.error("Incorrect data");
+            JSONObject objectError = new JSONObject();
+            objectError.put("error", "Incorrect data");
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(objectError.toJSONString());
         }
-        return null;
+        Database database = new Database();
+        if (database.changeAge(id,newAge)){
+            return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body("Age changed");
+        } else {
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body("Couldn't change age");
+        }
     }
 
 

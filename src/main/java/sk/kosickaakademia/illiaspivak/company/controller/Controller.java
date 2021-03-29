@@ -67,7 +67,7 @@ public class Controller {
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
     }
 
-    @GetMapping("/usersXML")
+    @GetMapping(value = "/users", params = "type")
     public ResponseEntity<String> getAllUsersXML(){
         List<User> list = new Database().getAllUsers();
         String json = new Util().getJson(list);

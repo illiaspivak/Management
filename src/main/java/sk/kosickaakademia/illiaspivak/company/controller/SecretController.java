@@ -48,6 +48,16 @@ public class SecretController {
             }
             String token = new Login().loginUser(login,password);
 
+            if (token == "2" || token == "1"){
+                return ResponseEntity.status(401).body("Incorrect password! Number of remaining attempts: " + token);
+            }
+            if (token == "0"){
+                return ResponseEntity.status(401).body("Incorrect password! Number of remaining attempts: " + token + ". You are blocked. Wait one minute");
+            }
+            if (token == "-2"){
+                return ResponseEntity.status(401).body("You are blocked. Wait one minute");
+            }
+
 
             if (token != null){
                 map.put(login, token);
